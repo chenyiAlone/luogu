@@ -12,6 +12,12 @@ void testArray(int arr[]) {
 
 }
 
+// int str_int(string &str) {
+//     char res = 0;
+//     char *p = &str;
+//     sprintf(res, "%d", p);
+//     return res;
+// }
 
 int main() {
     // string s = "b";
@@ -28,8 +34,11 @@ int main() {
     //     }
     // }
     // cout << res;
-    int arr[] = {2};
-    testArray(arr);
-    cout << arr[0];
+    // int arr[] = {2};
+    // // testArray(arr);
+    // cout << arr[0];
+    string s("1");
+    // cout << s.compare("a") <<endl;
+    cout << atoi( s.c_str() );
     return 0;
 }
