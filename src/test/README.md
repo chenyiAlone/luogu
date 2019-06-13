@@ -38,15 +38,19 @@
 
 ### string
 
-1. `str1.compare(str2)` 相等的时候返回的是 `0`
+1. `str1.compare(str2)` 相等的时候返回的是 `0`, `==` 可以用于用于字符串的比较
 
 ```cpp
-
+    string a("11"), b("11"), c("1");
     cout << "cmp(a, b): " << cmp(a, b) << endl;
     cout << "cmp(b, c): " << cmp(b, c) << endl;
-
+    cout << "a == b: " << (a == b) << endl;
+    cout << "a == c: " << (a == c) << endl; 
+    /*--------------- output ---------------*/
     a.compare(b): 0
     a.compare(c): 1
+    a == b: 1
+    a == c: 0
 
 ```
 
