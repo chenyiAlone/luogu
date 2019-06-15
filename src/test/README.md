@@ -15,14 +15,22 @@
 
 **`typedef struct`** 关键字
 
+1. 结构体的使用
+2. 重载运算符，`sort` 使用的是 `<`，所以将其进行重载即可 
+
 ```cpp
     typedef struct {
         int id;
         int sorce;
         int value;
+        bool operator < (const Player x) const {
+            if (sorce != x.sorce) return sorce > x.sorce;
+            return id < x.id;
+        }
     } player;
 
-    player p;
+    player p[10];
+    sort(p, p + 10);
 
 ```
 
