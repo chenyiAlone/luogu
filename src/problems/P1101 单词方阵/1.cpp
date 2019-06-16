@@ -79,7 +79,7 @@ int dx[8] = {-1, -1, -1, 0, 1, 1, 1, 0};
 int dy[8] = {-1, 0, 1, 1, 1, 0, -1, -1};
 
 bool dfs(int x, int y, int i, int index) {
-    // cout << x << ' ' << y << ' ' << index << endl;
+    trace[x][y] = true;
     bool flag = false;
     if (index == m - 1) {
         // cout << "yes" << endl;
@@ -87,23 +87,13 @@ bool dfs(int x, int y, int i, int index) {
     } else {
         int nx = x + dx[i], ny = y + dy[i];
         if (0 <= nx && nx < n && 0 <= ny && ny < n && s[index + 1] == strs[nx][ny] && !trace[nx][ny]) {
-            trace[nx][ny] = true;
             flag = dfs(nx, ny, i, index + 1);
-            trace[nx][ny] = false;
         }
-
-        // for (int i = 0; i < 8; i++) {
-        //     int nx = x + dx[i], ny = y + dy[i];
-        //     if (0 <= nx && nx < n && 0 <= ny && ny < n && s[index + 1] == strs[nx][ny] && !trace[nx][ny]) {
-        //         trace[nx][ny] = true;
-        //         flag |= dfs(nx, ny, index + 1);
-        //         trace[nx][ny] = false;
-        //     }
-        // }
     }
     if (flag) {
         f[x][y] = true;
     }
+    trace[x][y] = false;
     return flag;
 }
 
@@ -115,10 +105,8 @@ int main() {
     for (int i = 0; i < n; i++) {
         for (int j = 0; j < n; j++) {
             if (strs[i][j] == s[0]) {
-                trace[i][j] = true;
                 for (int t = 0; t < 8; t++)
                     dfs(i, j, t, 0);
-                trace[i][j] = false;
             }
         }
     }
