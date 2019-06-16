@@ -14,7 +14,7 @@ int fid(int x) {
     return ret;
 }
 
-void ty(unsigned int a, unsigned int b, unsigned int c) {
+void dfs(int a, int b, int c) {
     if (b == (1 << n) - 1) {
         cnt++;
         if (cnt <= 3) {
@@ -24,11 +24,11 @@ void ty(unsigned int a, unsigned int b, unsigned int c) {
         }
         return;
     }
-    unsigned int d = ~(a | b | c), board = ((~0 >> n) << n);
-    while (d > board) {
-        unsigned int bit = d & -d, ma = (((a | bit) << (32 - n)) << 1 ) >> (32 - n);
+    int d = (~(a | b | c) & (1 << n) - 1);
+    while (d) {
+        int bit = d & -d;
         temp.push_back(fid(bit));
-        ty(ma, b | bit, (c | bit) >> 1);
+        dfs((a | bit) << 1, b | bit, (c | bit) >> 1);
         temp.pop_back();
         d -= bit;
     }
@@ -36,7 +36,7 @@ void ty(unsigned int a, unsigned int b, unsigned int c) {
 
 int main() {
     cin >> n;
-    ty(0, 0, 0);
+    dfs(0, 0, 0);
     cout << cnt;
     return 0;
 }

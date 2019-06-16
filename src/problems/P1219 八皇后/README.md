@@ -43,7 +43,7 @@ void dfs(unsigned char a, unsigned char b, unsigned char c) {
 
 ```
 
-### 位运算 N 皇后问题
+### 位运算 N 皇后问题（原来思路）
 
 1. 使用了 `unsigned char` 只能用来解决八皇后的问题，使用 `unsigned int` 将其升级到最高 `32 x 32` 的棋盘
 
@@ -52,7 +52,7 @@ void dfs(unsigned char a, unsigned char b, unsigned char c) {
     1. `while (d)` 的边界问题。
         - `d = ~(a | b | c)` 需要 `d` 中确保全闲置位置部为 `1`，所以后 `n` 位全部为 `0` 的时候，就是 `d` 的最小边界(不包含，类似于 `0`),也就是八皇后时的边界：`11111111....1 | 00000000` 
 
-        - `(~0 >> n) << n`
+        - `board = (~0 >> n) << n`
 
     2. 下层 `dfs()` 时 `a` 的问题。
         - 在 `unsigned char` 中，对于多余的左移，会直接溢出(`c` 的右移同理)，但是 `unsigned int` 中，`n < 32` 的情况中，左移会移动到闲置位置上将其置为 `1`，这些位置必须保持为 `0` 不变。，使用 `<<` 将移位后闲置多余的 `1` 移除即可.置于 `c` 因为是右移，不影响闲置位置，所以不用处理
@@ -66,6 +66,7 @@ void dfs(unsigned char a, unsigned char b, unsigned char c) {
 
 3. 如何获得每一位的位置？`bit` 是选择的位置的 `bit = 2 ^ i`，因此求出对应的 `i` 即可
 
+
 ```cpp
     int cal_i(int x) {
         int ret = 0;
@@ -75,6 +76,19 @@ void dfs(unsigned char a, unsigned char b, unsigned char c) {
         }
         return ret;
     }
+
+```
+### 位运算 N 皇后问题再改进
+
+让 `d` 只保留有效的 `n` 位即可，不需要对 `while` 边界处理
+
+```cpp
+
+    int d = ~(a | b | c) & ((1 << n) - 1);
+    ...
+        dfs((a | bit) >> 1, b | bit, (c | bit) >> 1);
+    ...
+}
 
 ```
 
@@ -87,11 +101,10 @@ void dfs(unsigned int a, unsigned int b, unsigned int c) {
         cnt++;
         return;
     }
-    unsigned int d = ~(a | b | c), board = (~0 >> n) << n;
+    int d = ~(a | b | c) & ((1 << n) - 1);
     while (d) {
-        unsigned int bit = d & -d;
-        unsigned int ma = ((a | bit) << (32 - n) >> (32 - n);
-        dfs(ma, b | bit, (c | bit) >> 1);
+        int bit = d & -d;
+        dfs((a | bit) >> 1, b | bit, (c | bit) >> 1);
         d -= bit;
     }
 }
