@@ -26,9 +26,11 @@ int main() {
 
     cout << b.find(c) << endl;
     string s1 = "1abcd";
-    string s2 = "abc";
+    string s2 = "cbc";
     cout << s1.find(s2) << endl;
     cout << s1.substr(0, 1) << "y" << s1.substr(1 + 2) << endl;
-    cout << find(s1, s2);
+    cout << find(s1, s2) << endl;
+    cout << s1.find(s2) << endl;
+    cout << a.substr(4);
     return 0;
 }
